@@ -1,0 +1,17 @@
+
+AddType text/html php
+RewriteEngine On
+RewriteBase /
+
+RewriteCond %{REQUEST_METHOD} ^TRACE
+RewriteRule .* - [F]
+
+# Rewrite rules
+RewriteRule ^about/(.*)$ about.php?name=$1 [QSA,L]
+RewriteRule ^settings/(.*)$ settings.php?name=$1 [QSA,L]
+RewriteRule ^ws/(.*)$ ws.php?name=$1 [QSA,L]
+
+# Remove .php extension from URL
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME}.php -f
+RewriteRule ^([^\.]+)$ $1.php [NC,L]
