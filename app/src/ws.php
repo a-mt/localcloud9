@@ -44,7 +44,6 @@ try {
     //+------------------------------------------------------
 
     // Display temp loading screen
-    header('Content-Encoding: none;');
     header('X-Accel-Buffering: no');
     header('Content-type: text/html; charset=utf-8');
 
@@ -109,17 +108,20 @@ try {
 
     if($state == 1
         || $json['State']['Status'] == 'created'
-        || ($json['State']['Status'] == 'exited' && in_array($json['State']['ExitCode'], [255, 130, 137]))) {
+        || ($json['State']['Status'] == 'exited' && in_array($json['State']['ExitCode'], [0, 255, 130, 137]))) {
         _echo('Starting The Workspace');
         list($status, $result) = $docker->query("/containers/$container_name/start", 'POST');
 
         if($status < 300) {
             list($status, $result) = $docker->query("/containers/$container_name/json");
             $json = json_decode($result, true);
-            _echo('Starting The IDE');
-            sleep(7);
+            $txt  = 'Starting The IDE';
 
-            echo '<script>window.location.reload();</script>' . "\n";
+            echo '<script>
+                var loading = "";
+                setTimeout(function(){ window.location.reload() }, 10000);
+                setInterval(function(){ loading += "."; document.querySelector(".cool-message").innerHTML = "Starting the IDE" + loading; }, 1000);
+            </script>';
             while(@ob_flush());
             flush();
             die;
