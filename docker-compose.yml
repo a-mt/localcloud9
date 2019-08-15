@@ -14,7 +14,8 @@ services:
       - ./nginx/proxy_vhost.conf:/etc/nginx/vhost.d/default
       - /var/run/docker.sock:/tmp/docker.sock:ro
     environment:
-      - DEFAULT_HOST=localhost
+      - DEFAULT_HOST=cloud9.localhost
+      - HTTPS_METHOD=redirect
 
   nginx:
     image: nginx
@@ -24,7 +25,7 @@ services:
       - ./app:/var/www/app:ro
       - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
     environment:
-     - VIRTUAL_HOST=localhost
+     - VIRTUAL_HOST=cloud9.localhost
     links:
       - fpm
 
@@ -35,7 +36,7 @@ services:
     user: www-data
     environment:
       VOLUME_DIR: /home/myself/Projets Playground/localcloud9/volumes
-      DOMAIN: localhost
+      DOMAIN: cloud9.localhost
       CONTAINER_PREFIX: localcloud9_
       DOMAIN_PREFIX: ~
     volumes:

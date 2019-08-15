@@ -87,7 +87,7 @@ try {
                     ]
                 ]
             ],
-            'Env' => ["VIRTUAL_HOST=${domain}", 'VIRTUAL_PORT=8080', 'EXPOSE_PORT=5050,8080,8081,8082'],
+            'Env' => ["VIRTUAL_HOST=${domain}", 'HTTPS_METHOD=redirect', 'VIRTUAL_PORT=8080', 'EXPOSE_PORT=5050,8080,8081,8082'],
             'Cmd' => ['bash', '-lc', "/home/ubuntu/.c9/node/bin/node /var/c9sdk/server.js "
                                         . "-w /home/ubuntu/workspace "
                                         . "--auth ${auth} "
